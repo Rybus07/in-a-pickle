@@ -1,0 +1,8 @@
+numpy
+pandas
+matplotlib.pyplot
+matplotlib.patches
+seaborn
+sklearn
+xgboost
+tensorflow

@@ -222,16 +222,6 @@ Steps for cleaning and transforming shot data in main():
     6. Adding additional columns
         a. add shot_outcome MAKE SURE DATAFRAME IS IN DESCENDING ORDER OF SHOT NBR
         b. add rally_outcome MAKE SURE DATAFRAME IS IN DESCENDING ORDER OF SHOT NBR
-<<<<<<< Updated upstream
-        c. add delta_x_loc, delta_y_loc for change in x, y coordinates
-        d. add shot_angle
-        e. add dist_to_kitchen to represent the distance a shot was played wrt kitchen
-    7. Fill additional NaNs
-        a. Fill NaNs in ending_type, shot_outcome, and shot_type
-    8. Change coordinate system
-    9. Standardize the court coordinate system
-    10. Saving to output directory
-=======
     7. Calculating the distance a shot was played from the kitchen line
     8. Fill additional NaNs
         a. Fill NaNs in ending_type, shot_outcome, and shot_type
@@ -244,7 +234,6 @@ Steps for cleaning and transforming shot data in main():
     12. Adding Shot angle column to the dataframe
     
     13. Saving to output directory
->>>>>>> Stashed changes
 '''
 def main(args):
     # Step 1: Load shot and rally data
@@ -278,11 +267,7 @@ def main(args):
     # 4a. Backfilling NaNs in loc_y
     inds = shot_rally_df.index
     for i in inds:
-<<<<<<< Updated upstream
-        if shot_rally_df.loc[i, 'loc_y'].isnull():
-=======
         if not shot_rally_df.loc[i, 'loc_y']:
->>>>>>> Stashed changes
             shot_rally_df.loc[i, 'loc_y'] = shot_df.loc[i+1, 'next_loc_y']
 
     # 4b. Fill NaNs in next_loc_x, next_loc_y, using next shot loc_x, loc_y
@@ -333,10 +318,6 @@ def main(args):
 
     # Step 10: Standardizing the court coordinate system
     shot_rally_df = standardize_court_loc(shot_rally_df)
-<<<<<<< Updated upstream
-
-    # Step 10: Saving to output directory
-=======
     
     # Step 11: Calculating chage in position for both x and y coordinates
     shot_rally_df = delta_x_loc(shot_rally_df)
@@ -346,7 +327,6 @@ def main(args):
     shot_rally_df = add_shot_angle(shot_rally_df)
     
     # Step 13: Saving to output directory
->>>>>>> Stashed changes
     shot_rally_df.to_csv(args.o_dir+'/'+args.save_file, index=True)
     
     return
