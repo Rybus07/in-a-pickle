@@ -56,10 +56,9 @@ EDA was perfromed in *Notebook 2: (02_eda.ipynb)*. The following is an overview 
     * Distributions showed trends in skill_lvl where players with skill_lvl of 4.5 and above played similarly and could be grouped into a larger class called 'Advanced'
     * Saw that cardinality of `shot_type` was high and needed to be reduced
 2. Calculated adjacency matrices for my shot vs opponent's shot and my shot vs my next shot
-    * While interesting, decided to go elsewhere with the project and pursue sequence prediction. Can come back to this later
 3. Fit `rally_len` distributions to weibull distributions and log-normal
     * Lower skill levels are better fit with a weibull distribution
-    * high skill levels had a longer tail and are better fit with a log-normal distribution
+    * High skill levels had a longer tail and are better fit with a log-normal distribution
 
 
 ### Data Preprocessing
@@ -71,7 +70,7 @@ Preprocessing was performed in *Notebook 3: (03_Preprocessing_Feature_Engineerin
 
 ### Modeling
 
-We began drafting up initial model ideas for the shot outome prediction model in *Notebook 4: (04_av_training.ipynb)*. Currently remains a work in progress.
+We began drafting up initial model ideas for the shot sequence prediction model in *Notebook 4: (04_av_training.ipynb)*. Currently remains a work in progress.
 
 ### 🏆 Results and Evaluation
 Will be updated in the future....
@@ -88,7 +87,6 @@ Our notebooks (`01`, `02`, `03`) follow the project methodology stated above and
 1.  *Notebook 1: (01_data_wrangling.ipynb)* to clean the data and be ready for EDA.
 2.  *Notebook 2: (02_eda.ipynb)* for EDA.
 3.  *Notebook 3: (03_Preprocessing_Feature_Engineering.ipynb)* to create final dataframe for modeling phase.
-
 
 **Option 2: Module Usage**
 Alternatively you can reproduce our work using the following scripts:
@@ -178,8 +176,6 @@ DSCI 521 Sports Analytics Group
 
 * 1.0 (March 2026)
     * Initial release - Complete data collection and data preprocessing pipeline
-    * 
-    * 
 
 ## License
 
