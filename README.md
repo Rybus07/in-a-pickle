@@ -1,4 +1,14 @@
 ## Machine Learning Approach to Pickleball Strategy
+## Project Goal
+Inform Pickleball Strategy Using Data and Machine Learning
+**Users:**
+Pickleball players, pickleball analysts, and coaches
+**Stakeholders:**
+Pickleball club owners and professional organizations
+
+## Motivation
+Pickleball is a young, growing sport. To out knowledge, machine learning methods have yet to be applied to inform pickleball strategy. 
+
 ## DSCI 521 Term Project
 
 Data analysis and interpretation pipeline for [Pklmart's Competitive Pickleball Extracts]((https://www.kaggle.com/datasets/cakesofspan/pklmarts-competitive-pickleball-extracts)) from Kaggle, for DSCI 521 group term project at Drexel University.  
