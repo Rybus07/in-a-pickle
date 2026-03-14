@@ -103,12 +103,14 @@ Alternatively you can reproduce our work using the following scripts:
 Reference `requirements.txt` in the root directory
 * Python 3.8 or higher
 * Required Python packages:
-  * pandas
-  * requests
-  * json (built-in)
-  * datetime (built-in)
-  * dateutil
-  * pprint (built-in)
+     * numpy
+     * pandas
+     * matplotlib.pyplot
+     * matplotlib.patches
+     * seaborn
+     * sklearn
+     * xgboost
+     * tensorflow
 * Google Colab or Jupyter Notebook environment; if using Colab, requires a Google Drive account for file storage
 
 ### Installing
@@ -153,6 +155,8 @@ in-a-pickle/
 │   ├── 03_Preprocessing_Feature_Engineering.ipynb
 │   ├── 04_av_trainig.ipynb
 │   └── 04_av_trainig_ref.ipynb
+├── reports/
+│   └── eda_presentation.pdf
 ├── scripts/
 │   ├── cleaning.py
 │   ├── preprocessing.py 
