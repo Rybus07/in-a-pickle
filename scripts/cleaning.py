@@ -228,7 +228,7 @@ Steps for cleaning and transforming shot data in main():
     7. Fill additional NaNs
         a. Fill NaNs in ending_type, shot_outcome, and shot_type
     8. Change coordinate system
-    9. Standardize the court coordinate system    
+    9. Standardize the court coordinate system
     10. Saving to output directory
 '''
 def main(args):
