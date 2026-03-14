@@ -137,6 +137,69 @@ def change_coordinate_system(df):
 
     return df
 
+def standardize_court_loc(df):
+  '''
+  The purpose of this function is to standardize court locations to be in a 1 by 1.1 court instead of a 20 by 44 dimension,
+  reducting the effects of what 
+  '''
+  df = df.copy()
+  df['loc_x'] = df['loc_x'] / 20
+  df['loc_y'] = df['loc_y'] / 20
+  df['next_loc_x'] = df['next_loc_x'] / 20
+  df['next_loc_y'] = df['next_loc_y'] / 20
+  return df
+
+def delta_x_loc(df):
+        """
+        This function is used to calculate the change in x drirection for each shot
+        """
+        df = df.copy()
+        df['delta_x_loc'] = df['next_loc_x'] - df['loc_x']
+        return df
+    
+def delta_y_loc(df):
+    """
+    This function is used to calculate the change in y drirection for each shot
+    """
+    df = df.copy()
+    df['delta_y_loc'] = df['next_loc_y'] - df['loc_y']
+    return df
+
+def add_shot_angle(df):
+    """
+    Calculates the angle of the shot in radians using arctan2.
+    Handles the trajectory from current location to next location.
+    """
+    df = df.copy()
+
+    # 1. Calculate the coordinate deltas
+    dy = df['next_loc_y'] - df['loc_y']
+    dx = df['next_loc_x'] - df['loc_x']
+
+    # 2. Use arctan2 (y, x) for quadrant-aware angles (-pi to pi)
+    # This correctly identifies shots moving 'backward' or 'sideways'
+    df['shot_angle'] = np.arctan2(dy, dx)
+
+    return df
+
+def add_kitchen_distance(df):
+    '''
+    This function calculates how far from the kitchen line a ball has been played from, the aim for this function
+    is to help further separate shots played from the kitchen line or not 
+    '''
+    df = df.copy()
+
+    # 1. Identify which side of the net the ball is on (7 or -7)
+    # 2. Subtract the ball's y-position from that line
+    # 3. Use abs() to ensure the distance is always positive
+    df['dist_to_kitchen'] = df['loc_y'].apply(lambda y: abs(y - 7) if y > 0 else abs(y + (-7)))
+
+    # Optional: If the ball is INSIDE the kitchen, set distance to 0
+    # (i.e., if |y| < 7, the ball is in the kitchen)
+    df.loc[df['loc_y'].abs() < 7, 'dist_to_kitchen'] = 0
+
+    return df
+
 '''
 Steps for cleaning and transforming shot data in main():
     1. Load shot and rally data
@@ -236,11 +299,21 @@ def main(args):
     # serving team will start at y < -22
     # returning team will start at y > 22
     shot_rally_df = change_coordinate_system(shot_rally_df)
+
+    # Step 9: Standardizing the court coordinate system
+    shot_rally_df = standardize_court_loc(shot_rally_df)
     
-    # Step 9: ADDITIONAL CHANGES FROM RYAN. LEAVING HERE FORE YOU TO FILL
+    # Step 10: Calculating chage in position for both x and y coordinates
+    shot_rally_df = delta_x_loc(shot_rally_df)
+    shot_rally_df = delta_y_loc(shot_rally_df)
+
+    # Step 11: Adding Shot angle column to the dataframe
+    shot_rally_df = add_shot_angle(shot_rally_df)
+
+    # Step 12: Calculating the distance a shot was played from the kitchen line
+    shot_rally_df = add_kitchen_distance(shot_rally_df)
     
-    
-    # Step 10: Saving to output directory
+    # Step 13: Saving to output directory
     shot_rally_df.to_csv(args.o_dir+'/'+args.save_file, index=True)
     
     return
