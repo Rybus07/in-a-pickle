@@ -222,6 +222,7 @@ Steps for cleaning and transforming shot data in main():
     6. Adding additional columns
         a. add shot_outcome MAKE SURE DATAFRAME IS IN DESCENDING ORDER OF SHOT NBR
         b. add rally_outcome MAKE SURE DATAFRAME IS IN DESCENDING ORDER OF SHOT NBR
+<<<<<<< Updated upstream
         c. add delta_x_loc, delta_y_loc for change in x, y coordinates
         d. add shot_angle
         e. add dist_to_kitchen to represent the distance a shot was played wrt kitchen
@@ -230,6 +231,20 @@ Steps for cleaning and transforming shot data in main():
     8. Change coordinate system
     9. Standardize the court coordinate system
     10. Saving to output directory
+=======
+    7. Calculating the distance a shot was played from the kitchen line
+    8. Fill additional NaNs
+        a. Fill NaNs in ending_type, shot_outcome, and shot_type
+    9. Change coordinate system
+
+    10. Standardizing the court coordinate system
+    
+    11. Calculating chage in position for both x and y coordinates
+
+    12. Adding Shot angle column to the dataframe
+    
+    13. Saving to output directory
+>>>>>>> Stashed changes
 '''
 def main(args):
     # Step 1: Load shot and rally data
@@ -250,7 +265,7 @@ def main(args):
     shot_rally_df.sort_values(['match_id', 'game_id', 'rally_nbr', 'shot_nbr'],
                               inplace=True, ascending=False)
     shot_rally_df = shot_rally_df.astype({'rally_len':'int64'})
-    shot_rally_df.reset_indexx(drop=True, inplace=True)
+    shot_rally_df.reset_index(drop=True, inplace=True)
 
     # Step 3: Fill edge case where loc_y == NaN and rally_len == 1
     # Case for missed serve, filling loc_y with 23.0, value will be flipped later
@@ -263,7 +278,11 @@ def main(args):
     # 4a. Backfilling NaNs in loc_y
     inds = shot_rally_df.index
     for i in inds:
+<<<<<<< Updated upstream
         if shot_rally_df.loc[i, 'loc_y'].isnull():
+=======
+        if not shot_rally_df.loc[i, 'loc_y']:
+>>>>>>> Stashed changes
             shot_rally_df.loc[i, 'loc_y'] = shot_df.loc[i+1, 'next_loc_y']
 
     # 4b. Fill NaNs in next_loc_x, next_loc_y, using next shot loc_x, loc_y
@@ -298,21 +317,36 @@ def main(args):
     # 6e. add dist_to_kitchen
     shot_rally_df = add_kitchen_distance(shot_rally_df)
 
-    # Step 7: Fill NaNs in ending_type, shot_outcome, and shot_type with unknown
+    # Step 7: Calculating the distance a shot was played from the kitchen line
+    shot_rally_df = add_kitchen_distance(shot_rally_df)
+
+    # Step 8: Fill NaNs in ending_type, shot_outcome, and shot_type with unknown
     shot_rally_df.fillna(value = {'ending_type':'Unknown',
                                   'shot_outcome':'Unknown',
                                   'shot_type':'Unknown'},
                          inplace=True)
 
-    # Step 8: Change coordinate system
+    # Step 9: Change coordinate system
     # serving team will start at y < -22
     # returning team will start at y > 22
     shot_rally_df = change_coordinate_system(shot_rally_df)
 
-    # Step 9: Standardizing the court coordinate system
+    # Step 10: Standardizing the court coordinate system
     shot_rally_df = standardize_court_loc(shot_rally_df)
+<<<<<<< Updated upstream
 
     # Step 10: Saving to output directory
+=======
+    
+    # Step 11: Calculating chage in position for both x and y coordinates
+    shot_rally_df = delta_x_loc(shot_rally_df)
+    shot_rally_df = delta_y_loc(shot_rally_df)
+
+    # Step 12: Adding Shot angle column to the dataframe
+    shot_rally_df = add_shot_angle(shot_rally_df)
+    
+    # Step 13: Saving to output directory
+>>>>>>> Stashed changes
     shot_rally_df.to_csv(args.o_dir+'/'+args.save_file, index=True)
     
     return
