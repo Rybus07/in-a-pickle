@@ -263,7 +263,8 @@ def main(args):
     # 4a. Backfilling NaNs in loc_y
     inds = shot_rally_df.index
     for i in inds:
-        shot_rally_df.loc[i, 'loc_y'] = shot_df.loc[i+1, 'next_loc_y']
+        if shot_rally_df.loc[i, 'loc_y'].isnull():
+            shot_rally_df.loc[i, 'loc_y'] = shot_df.loc[i+1, 'next_loc_y']
 
     # 4b. Fill NaNs in next_loc_x, next_loc_y, using next shot loc_x, loc_y
     cond1 = shot_rally_df['next_loc_x'].isnull()
