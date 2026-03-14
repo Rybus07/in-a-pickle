@@ -1,15 +1,60 @@
-## Machine Learning Approach to Pickleball Strategy
-## Project Goal
-Inform Pickleball Strategy Using Data and Machine Learning
-**Users:**
+# Machine Learning Approach to Pickleball Strategy
+## DSCI 521 Term Project
+
+## Problem Statement
+Pickleball is a game of rapid transitions and strategic positioning. While players often rely on "feel," there is a lack of quantitative modeling to determine the statistically "best" next shot in a given scenario.
+
+**Project Goal:** 
+This project utilizes the pklmart dataset to build a machine learning model that predicts shot outcomes based on spatial positioning, helping players optimize their decision-making to increase rally win probability.
+
+**Users:** 
 Pickleball players, pickleball analysts, and coaches
+
 **Stakeholders:**
 Pickleball club owners and professional organizations
 
-## Motivation
-Pickleball is a young, growing sport. To out knowledge, machine learning methods have yet to be applied to inform pickleball strategy. 
+### 🛠 Methodology
+This project follows a standard Data Science Lifecycle:
 
-## DSCI 521 Term Project
+Data Acquisition: Leveraging the [Pklmart's Competitive Pickleball Extracts]((https://www.kaggle.com/datasets/cakesofspan/pklmarts-competitive-pickleball-extracts)) from Kaggle.
+
+#### Data Cleaning and Feature Engineering :
+
+*Notebook 1: (01_data_wrangling.ipynb)*
+The data was cleaned based on the following steps:
+1. Merging the Shot and Rally Data
+2. Handling null values within the data
+3. Added additional features to the dataset including:
+     - Shot Distance
+     - Shot Angle
+     - Change in x, y location
+4. Standardizing the coordinate system
+
+#### Exploratory Data Analysis
+
+Notebook 2: (02_eda.ipynb)
+The following is an overview of the EDA performed in this notebook:
+1. Plotted univariate and bivariate distributions
+    * Distributions showed trends in skill_lvl where players with skill_lvl of 4.5 and above played similarly and could be grouped into a larger class called 'Advanced'
+    * Saw that cardinality of `shot_type` was high and needed to be reduced
+2. Calculated adjacency matrices for my shot vs opponent's shot and my shot vs my next shot
+    * While interesting, decided to go elsewhere with the project and pursue sequence prediction. Can come back to this later
+3. Fit `rally_len` distributions to weibull distributions and log-normal
+    * Lower skill levels are better fit with a weibull distribution
+    * high skill levels had a longer tail and are better fit with a log-normal distribution
+    * Fitted distributions are nice to have, but moving on with sequence prediction using RNNs
+
+
+#### Data Preprocessing
+Notebook 3: (03_Preprocessing_Feature_Engineering.ipynb)
+
+Calculating derivative metrics such as shot_angle, dist_to_kitchen, and delta_position.
+
+Preprocessing: Standardizing diverse court dimensions into a unified 1 by 2.2 unit coordinate system to ensure model generalization.
+
+
+Modeling: Training classifiers to predict shot_outcome (e.g., Winner, Error, or Reset).
+
 
 Data analysis and interpretation pipeline for [Pklmart's Competitive Pickleball Extracts]((https://www.kaggle.com/datasets/cakesofspan/pklmarts-competitive-pickleball-extracts)) from Kaggle, for DSCI 521 group term project at Drexel University.  
 
@@ -28,6 +73,54 @@ Our project uses the **Pklmart's Competitive Pickleball Extracts** hosted on Kag
 - **License:** Public API with [entire database freely available to all](https://thespacedevs.com/llapi), no documented restrictions for educational use
 - **Our work:** Data collection, cleaning, integration, and documentation
 - **Attribution:** Dataset credits Launch Library 2 API as source
+
+### 🛠 Methodology
+This project follows a standard Data Science Lifecycle, specialized for spatial sports data:
+
+Data Acquisition: Leveraging the pklmart Competitive Pickleball Extracts (Kaggle).
+
+Preprocessing: Standardizing diverse court dimensions into a unified 1 by 2.2 unit coordinate system to ensure model generalization.
+
+Feature Engineering: Calculating derivative metrics such as shot_angle, dist_to_kitchen, and delta_position.
+
+Modeling: Training classifiers to predict shot_outcome (e.g., Winner, Error, or Reset).
+
+### 📊 Data Exploration
+The Dataset: Briefly describe the shot.csv and rally.csv files.
+
+Normalization: Explain why you divided by 20 (as we discussed) to create a scale-invariant model.
+
+Coordinate Flipping: Discuss how you aligned the "serving" and "returning" sides so the model treats the court consistently regardless of which team started the point.
+
+### 📈 Data Analysis
+(This is where you show off your Matplotlib skills!)
+
+Heatmaps: Distribution of shots across the court.
+
+Shot Distribution: A breakdown of common shot types (Dinks vs. Drives).
+
+The "Kitchen" Effect: How distance from the NVZ (Kitchen) line correlates with winning or losing a rally.
+
+### 🤖 Models Used
+Feature Selection: Using loc_x, loc_y, shot_angle, and dist_to_kitchen.
+
+Algorithms: (e.g., Random Forest, XGBoost, or PySpark GBTs).
+
+Class Imbalance: How you handled the fact that most shots are "Extend Rally" rather than "Winners."
+
+### 🏆 Results and Evaluation
+Accuracy/F1-Score: How well does the model predict the outcome?
+
+Confusion Matrix: Does the model struggle more with "Unforced Errors" vs. "Forced Errors"?
+
+Feature Importance: Which metric matters most? (e.g., Is shot_angle more predictive than loc_x?)
+
+### 💡 Insights and Conclusions
+Tactical Insight: Based on the model, what is the "highest value" shot for a player caught at the baseline?
+
+Model Limitations: Discussing things like player fatigue or wind speed that the dataset doesn't capture.
+
+Future Work: Mentioning things like integrating video CV or tracking player movement over time.
 
 ### How to Use This Project
 
