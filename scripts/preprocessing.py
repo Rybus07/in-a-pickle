@@ -6,6 +6,14 @@ from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from sklearn.model_selection import train_test_split
 
+def fill_null_numerical_values(df, cols):
+  for col in cols:
+    new_column_name = col + '_missing'
+    df[new_column_name] = df[col].isnull().astype(int)
+    df[col] = df[col].fillna(0)
+  return df
+
+
 def reformat_data(df):
     '''
     Reformating and cleaning data one last time before feeding it into the preprocessing pipeline
@@ -26,7 +34,7 @@ def reformat_data(df):
 
     # Step 2. mapping skill level into 3 bins beginner, intermediate, advanced
     skill_mapper = {'2.5':'Beginner', '3.0':'Beginner', '3.5':'Intermediate',
-                    '4.0':'Intermediate', '4.0':'Advanced', '4.5':'Advanced',
+                    '4.0':'Intermediate', '4.5':'Advanced',
                     '5.0':'Advanced', '5.5':'Advanced', 'Pro':'Advanced', 'Senior Pro':'Advanced'}
 
     df['skill_lvl'] = df['skill_lvl'].map(skill_mapper)
@@ -44,13 +52,17 @@ def reformat_data(df):
                 'srv_point_won', 'team_hitting']
     df = df[new_order]
 
+    #Step 5. Fill Null numerical cols
+    df = fill_null_numerical_values(df, cols = ['next_loc_x', 'next_loc_y',
+                'delta_loc_x', 'delta_loc_y', 'shot_distance', 'shot_angle'])
+
     return df
 
 def gen_preprocess_pipe():
     ohe = OneHotEncoder(sparse_output=False, handle_unknown='ignore')
     cat_cols = ['skill_lvl']
     num_cols = ['loc_x', 'loc_y', 'next_loc_x', 'next_loc_y',
-                'delta_loc_x', 'delta_loc_y', 'shot_distance', 'shot_angle']
+                'delta_loc_x', 'delta_loc_y', 'shot_distance', 'shot_angle', 'next_loc_x_missing']
 
     transformer = ColumnTransformer([
         ('cat_trans', ohe, cat_cols),
