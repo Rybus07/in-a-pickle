@@ -12,11 +12,11 @@ Pickleball players, pickleball analysts, and coaches
 **Stakeholders:**
 Pickleball club owners and professional organizations
 
-### The Dataset
+## The Dataset
 
 This project utilizes the pklmart Competitive Pickleball Extracts dataset to build a predictive machine learning model aimed at optimizing player decision-making. By leveraging shot-level spatial data, we recreate high-fidelity in-game scenarios to analyze how specific shot selections—such as placement and depth directly affect a team's probability of winning the rally.
 
-## Distribution & Access
+### Distribution & Access
 
 Our project notebooks, scripts and materials are publicly available on GitHub and can be downloaded by any interested party as a TSV or recreated using our acquisition and cleaning code.
 
@@ -31,12 +31,12 @@ Our project uses the **Pklmart's Competitive Pickleball Extracts** hosted on Kag
 
 
 
-### 🛠 Methodology
+## 🛠 Methodology
 This project follows a standard Data Science Lifecycle:
 
 Data Acquisition: Leveraging the [Pklmart's Competitive Pickleball Extracts]((https://www.kaggle.com/datasets/cakesofspan/pklmarts-competitive-pickleball-extracts)) from Kaggle.
 
-#### Data Cleaning and Feature Engineering :
+### Data Cleaning and Feature Engineering :
 
 Data Cleaning can be found in *Notebook 1: (01_data_wrangling.ipynb)*. The data was cleaned based on the following steps:
 1. Merging the Shot and Rally Data
@@ -47,7 +47,7 @@ Data Cleaning can be found in *Notebook 1: (01_data_wrangling.ipynb)*. The data 
      - Change in x, y location
 4. Standardizing the coordinate system
 
-#### Exploratory Data Analysis
+### Exploratory Data Analysis
 
 EDA was perfromed in *Notebook 2: (02_eda.ipynb)*. The following is an overview of the EDA performed in this notebook:
 1. Plotted univariate and bivariate distributions
@@ -61,14 +61,14 @@ EDA was perfromed in *Notebook 2: (02_eda.ipynb)*. The following is an overview 
     * Fitted distributions are nice to have, but moving on with sequence prediction using RNNs
 
 
-#### Data Preprocessing
+### Data Preprocessing
 
 Preprocessing was performed in *Notebook 3: (03_Preprocessing_Feature_Engineering.ipynb)*. This is an overview of the steps performed:
 1. Preprocessed data further for training
 2. Created pipeline which grabs appropriate columns from dataframe and creates train, test splits
 3. Trained a model using XGBoost to demonstrate process
 
-#### Modeling
+### Modeling
 
 We began drafting up initial model ideas for the shot outome prediction model in *Notebook 4: (04_av_training.ipynb)*. Currently remains a work in progress.
 
@@ -80,7 +80,7 @@ Will be updated in the future....
 Will be updated in the future....
 
 
-### How to Use This Project
+## How to Use This Project
 
 **Option 1: Run the Notebooks (Recommended)**
 Our notebooks (`01`, `02`, `03`) follow the project methodology stated above and should be run in that order:
@@ -96,7 +96,7 @@ Folder: scripts
 - preprocessing.py
 
 
-### Dataset Contents
+## Dataset Contents
 
 Within `data/cleaned data` folder:
 
