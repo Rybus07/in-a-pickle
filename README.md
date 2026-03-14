@@ -1,25 +1,25 @@
 ## Machine Learning Approach to Pickleball Strategy
 ## DSCI 521 Term Project
 
-Data analysis and interpretation pipeline for pklmart data from the Space Devs [Launch Library 2 API](https://thespacedevs.com/llapi), for DSCI 521 group term project at Drexel University.  
+Data analysis and interpretation pipeline for [Pklmart's Competitive Pickleball Extracts]((https://www.kaggle.com/datasets/cakesofspan/pklmarts-competitive-pickleball-extracts)) from Kaggle, for DSCI 521 group term project at Drexel University.  
 
 ## Description
 
-This project utilizes the pklmart's Competitive Pickleball Extracts dataset hosted on kaggle with the aim to create a machine learning model that can help players have better shot making decisions in their games. We plan to use the shot level data provided by pklmart to be able to recreate in game scenarios that can allow us an overall view of how shot choices effect a teams ability to 
+This project utilizes the pklmart Competitive Pickleball Extracts dataset to build a predictive machine learning model aimed at optimizing player decision-making. By leveraging shot-level spatial data, we recreate high-fidelity in-game scenarios to analyze how specific shot selections—such as placement and depth directly affect a team's probability of winning the rally.
 
 ## Distribution & Access
 
 Our project notebooks, scripts and materials are publicly available on GitHub and can be downloaded by any interested party as a TSV or recreated using our acquisition and cleaning code.
 
 ### Data Source Rights
-Our dataset uses the **Launch Library 2 API**, which provides public space launch data for research and educational purposes.
+Our project uses the **Pklmart's Competitive Pickleball Extracts** hosted on Kaggle.
 
-- **Source:** The Space Devs [Launch Library 2 API](https://ll.thespacedevs.com/)
+- **Source:** Pklmart's Competitive Pickleball Extracts [Pklmart's Competitive Pickleball Extracts](https://www.kaggle.com/datasets/cakesofspan/pklmarts-competitive-pickleball-extracts)
 - **License:** Public API with [entire database freely available to all](https://thespacedevs.com/llapi), no documented restrictions for educational use
 - **Our work:** Data collection, cleaning, integration, and documentation
 - **Attribution:** Dataset credits Launch Library 2 API as source
 
-### How to Use This Dataset
+### How to Use This Project
 
 **Option 1: Run the Notebooks (Recommended)**
 Our notebooks (`02a`, `02b`, `02c`, `03`) include a **Hybrid Loading System**. They will automatically:
@@ -107,7 +107,7 @@ Reference `requirements.txt` in the root directory
 
 1. Clone the repository to your local machine or Google Drive
 ```
-git clone https://github.com/Rybus07/space-legends-data.git
+git clone https://github.com/Rybus07/in-a-pickle.git
 ```
 
 2. Install required packages (if running locally) by referencing `requirements.txt` in the root directory
