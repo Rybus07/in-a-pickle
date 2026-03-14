@@ -16,7 +16,7 @@ Pickleball club owners and professional organizations
 
 This project utilizes the pklmart Competitive Pickleball Extracts dataset to build a predictive machine learning model aimed at optimizing player decision-making. By leveraging shot-level spatial data, we recreate high-fidelity in-game scenarios to analyze how specific shot selections—such as placement and depth directly affect a team's probability of winning the rally.
 
-** The Dataset Description can be found on [Kaggle](https://www.kaggle.com/datasets/cakesofspan/pklmarts-competitive-pickleball-extracts)**
+**The Dataset Description can be found on [Kaggle](https://www.kaggle.com/datasets/cakesofspan/pklmarts-competitive-pickleball-extracts)**
 
 ### Distribution & Access
 
@@ -60,7 +60,6 @@ EDA was perfromed in *Notebook 2: (02_eda.ipynb)*. The following is an overview 
 3. Fit `rally_len` distributions to weibull distributions and log-normal
     * Lower skill levels are better fit with a weibull distribution
     * high skill levels had a longer tail and are better fit with a log-normal distribution
-    * Fitted distributions are nice to have, but moving on with sequence prediction using RNNs
 
 
 ### Data Preprocessing
