@@ -5,7 +5,7 @@ Data analysis and interpretation pipeline for pklmart data from the Space Devs [
 
 ## Description
 
-This project utilizes the pklmart's Competitive Pickleball Extracts dataset hosted on kaggle with the aim to create a machine learning model that can help players have better shot making 
+This project utilizes the pklmart's Competitive Pickleball Extracts dataset hosted on kaggle with the aim to create a machine learning model that can help players have better shot making decisions in their games. We plan to use the shot level data provided by pklmart to be able to recreate in game scenarios that can allow us an overall view of how shot choices effect a teams ability to 
 
 ## Distribution & Access
 
