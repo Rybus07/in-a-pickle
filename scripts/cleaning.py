@@ -222,19 +222,14 @@ Steps for cleaning and transforming shot data in main():
     6. Adding additional columns
         a. add shot_outcome MAKE SURE DATAFRAME IS IN DESCENDING ORDER OF SHOT NBR
         b. add rally_outcome MAKE SURE DATAFRAME IS IN DESCENDING ORDER OF SHOT NBR
+        c. add delta_x_loc, delta_y_loc for change in x, y coordinates
+        d. add shot_angle
+        e. add dist_to_kitchen to represent the distance a shot was played wrt kitchen
     7. Fill additional NaNs
         a. Fill NaNs in ending_type, shot_outcome, and shot_type
     8. Change coordinate system
-    
-    9. Standardizing the court coordinate system
-    
-    10. Calculating chage in position for both x and y coordinates
-
-    11. Adding Shot angle column to the dataframe
-
-    12. Calculating the distance a shot was played from the kitchen line
-    
-    13. Saving to output directory
+    9. Standardize the court coordinate system    
+    10. Saving to output directory
 '''
 def main(args):
     # Step 1: Load shot and rally data
@@ -294,6 +289,13 @@ def main(args):
     shot_rally_df = add_shot_outcome(shot_rally_df)
     # 6b. add rally_outcome
     shot_rally_df = add_rally_outcome(shot_rally_df)
+    # 6c. add delta_x_loc, delta_y_loc
+    shot_rally_df = delta_x_loc(shot_rally_df)
+    shot_rally_df = delta_y_loc(shot_rally_df)
+    # 6d. add shot_angle
+    shot_rally_df = add_shot_angle(shot_rally_df)
+    # 6e. add dist_to_kitchen
+    shot_rally_df = add_kitchen_distance(shot_rally_df)
 
     # Step 7: Fill NaNs in ending_type, shot_outcome, and shot_type with unknown
     shot_rally_df.fillna(value = {'ending_type':'Unknown',
@@ -308,18 +310,8 @@ def main(args):
 
     # Step 9: Standardizing the court coordinate system
     shot_rally_df = standardize_court_loc(shot_rally_df)
-    
-    # Step 10: Calculating chage in position for both x and y coordinates
-    shot_rally_df = delta_x_loc(shot_rally_df)
-    shot_rally_df = delta_y_loc(shot_rally_df)
 
-    # Step 11: Adding Shot angle column to the dataframe
-    shot_rally_df = add_shot_angle(shot_rally_df)
-
-    # Step 12: Calculating the distance a shot was played from the kitchen line
-    shot_rally_df = add_kitchen_distance(shot_rally_df)
-    
-    # Step 13: Saving to output directory
+    # Step 10: Saving to output directory
     shot_rally_df.to_csv(args.o_dir+'/'+args.save_file, index=True)
     
     return
