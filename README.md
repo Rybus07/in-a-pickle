@@ -1,5 +1,4 @@
 # Machine Learning Approach to Pickleball Strategy
-## DSCI 521 Term Project
 
 ## Problem Statement
 Pickleball is a game of rapid transitions and strategic positioning. While players often rely on "feel," there is a lack of quantitative modeling to determine the statistically "best" next shot in a given scenario.
@@ -13,52 +12,7 @@ Pickleball players, pickleball analysts, and coaches
 **Stakeholders:**
 Pickleball club owners and professional organizations
 
-### 🛠 Methodology
-This project follows a standard Data Science Lifecycle:
-
-Data Acquisition: Leveraging the [Pklmart's Competitive Pickleball Extracts]((https://www.kaggle.com/datasets/cakesofspan/pklmarts-competitive-pickleball-extracts)) from Kaggle.
-
-#### Data Cleaning and Feature Engineering :
-
-*Notebook 1: (01_data_wrangling.ipynb)*
-The data was cleaned based on the following steps:
-1. Merging the Shot and Rally Data
-2. Handling null values within the data
-3. Added additional features to the dataset including:
-     - Shot Distance
-     - Shot Angle
-     - Change in x, y location
-4. Standardizing the coordinate system
-
-#### Exploratory Data Analysis
-
-Notebook 2: (02_eda.ipynb)
-The following is an overview of the EDA performed in this notebook:
-1. Plotted univariate and bivariate distributions
-    * Distributions showed trends in skill_lvl where players with skill_lvl of 4.5 and above played similarly and could be grouped into a larger class called 'Advanced'
-    * Saw that cardinality of `shot_type` was high and needed to be reduced
-2. Calculated adjacency matrices for my shot vs opponent's shot and my shot vs my next shot
-    * While interesting, decided to go elsewhere with the project and pursue sequence prediction. Can come back to this later
-3. Fit `rally_len` distributions to weibull distributions and log-normal
-    * Lower skill levels are better fit with a weibull distribution
-    * high skill levels had a longer tail and are better fit with a log-normal distribution
-    * Fitted distributions are nice to have, but moving on with sequence prediction using RNNs
-
-
-#### Data Preprocessing
-Notebook 3: (03_Preprocessing_Feature_Engineering.ipynb)
-
-Calculating derivative metrics such as shot_angle, dist_to_kitchen, and delta_position.
-
-Preprocessing: Standardizing diverse court dimensions into a unified 1 by 2.2 unit coordinate system to ensure model generalization.
-
-
-Modeling: Training classifiers to predict shot_outcome (e.g., Winner, Error, or Reset).
-
-
-Data analysis and interpretation pipeline for [Pklmart's Competitive Pickleball Extracts]((https://www.kaggle.com/datasets/cakesofspan/pklmarts-competitive-pickleball-extracts)) from Kaggle, for DSCI 521 group term project at Drexel University.  
-
-## Description
+### The Dataset
 
 This project utilizes the pklmart Competitive Pickleball Extracts dataset to build a predictive machine learning model aimed at optimizing player decision-making. By leveraging shot-level spatial data, we recreate high-fidelity in-game scenarios to analyze how specific shot selections—such as placement and depth directly affect a team's probability of winning the rally.
 
@@ -74,76 +28,73 @@ Our project uses the **Pklmart's Competitive Pickleball Extracts** hosted on Kag
 - **Our work:** Data collection, cleaning, integration, and documentation
 - **Attribution:** Dataset credits Launch Library 2 API as source
 
+
+
+
 ### 🛠 Methodology
-This project follows a standard Data Science Lifecycle, specialized for spatial sports data:
+This project follows a standard Data Science Lifecycle:
 
-Data Acquisition: Leveraging the pklmart Competitive Pickleball Extracts (Kaggle).
+Data Acquisition: Leveraging the [Pklmart's Competitive Pickleball Extracts]((https://www.kaggle.com/datasets/cakesofspan/pklmarts-competitive-pickleball-extracts)) from Kaggle.
 
-Preprocessing: Standardizing diverse court dimensions into a unified 1 by 2.2 unit coordinate system to ensure model generalization.
+#### Data Cleaning and Feature Engineering :
 
-Feature Engineering: Calculating derivative metrics such as shot_angle, dist_to_kitchen, and delta_position.
+Data Cleaning can be found in *Notebook 1: (01_data_wrangling.ipynb)*. The data was cleaned based on the following steps:
+1. Merging the Shot and Rally Data
+2. Handling null values within the data
+3. Added additional features to the dataset including:
+     - Shot Distance
+     - Shot Angle
+     - Change in x, y location
+4. Standardizing the coordinate system
 
-Modeling: Training classifiers to predict shot_outcome (e.g., Winner, Error, or Reset).
+#### Exploratory Data Analysis
 
-### 📊 Data Exploration
-The Dataset: Briefly describe the shot.csv and rally.csv files.
+EDA was perfromed in *Notebook 2: (02_eda.ipynb)*. The following is an overview of the EDA performed in this notebook:
+1. Plotted univariate and bivariate distributions
+    * Distributions showed trends in skill_lvl where players with skill_lvl of 4.5 and above played similarly and could be grouped into a larger class called 'Advanced'
+    * Saw that cardinality of `shot_type` was high and needed to be reduced
+2. Calculated adjacency matrices for my shot vs opponent's shot and my shot vs my next shot
+    * While interesting, decided to go elsewhere with the project and pursue sequence prediction. Can come back to this later
+3. Fit `rally_len` distributions to weibull distributions and log-normal
+    * Lower skill levels are better fit with a weibull distribution
+    * high skill levels had a longer tail and are better fit with a log-normal distribution
+    * Fitted distributions are nice to have, but moving on with sequence prediction using RNNs
 
-Normalization: Explain why you divided by 20 (as we discussed) to create a scale-invariant model.
 
-Coordinate Flipping: Discuss how you aligned the "serving" and "returning" sides so the model treats the court consistently regardless of which team started the point.
+#### Data Preprocessing
 
-### 📈 Data Analysis
-(This is where you show off your Matplotlib skills!)
+Preprocessing was performed in *Notebook 3: (03_Preprocessing_Feature_Engineering.ipynb)*. This is an overview of the steps performed:
+1. Preprocessed data further for training
+2. Created pipeline which grabs appropriate columns from dataframe and creates train, test splits
+3. Trained a model using XGBoost to demonstrate process
 
-Heatmaps: Distribution of shots across the court.
+#### Modeling
 
-Shot Distribution: A breakdown of common shot types (Dinks vs. Drives).
-
-The "Kitchen" Effect: How distance from the NVZ (Kitchen) line correlates with winning or losing a rally.
-
-### 🤖 Models Used
-Feature Selection: Using loc_x, loc_y, shot_angle, and dist_to_kitchen.
-
-Algorithms: (e.g., Random Forest, XGBoost, or PySpark GBTs).
-
-Class Imbalance: How you handled the fact that most shots are "Extend Rally" rather than "Winners."
+We began drafting up initial model ideas for the shot outome prediction model in *Notebook 4: (04_av_training.ipynb)*. Currently remains a work in progress.
 
 ### 🏆 Results and Evaluation
-Accuracy/F1-Score: How well does the model predict the outcome?
-
-Confusion Matrix: Does the model struggle more with "Unforced Errors" vs. "Forced Errors"?
-
-Feature Importance: Which metric matters most? (e.g., Is shot_angle more predictive than loc_x?)
+Will be updated in the future....
+ 
 
 ### 💡 Insights and Conclusions
-Tactical Insight: Based on the model, what is the "highest value" shot for a player caught at the baseline?
+Will be updated in the future....
 
-Model Limitations: Discussing things like player fatigue or wind speed that the dataset doesn't capture.
-
-Future Work: Mentioning things like integrating video CV or tracking player movement over time.
 
 ### How to Use This Project
 
 **Option 1: Run the Notebooks (Recommended)**
-Our notebooks (`02a`, `02b`, `02c`, `03`) include a **Hybrid Loading System**. They will automatically:
-1.  Check your local machine for the data.
-2.  If missing, stream the data directly from GitHub.
-*This means you can run our analysis in Google Colab without manually uploading any files.*
+Our notebooks (`01`, `02`, `03`) follow the project methodology stated above and should be run in that order:
+1.  *Notebook 1: (01_data_wrangling.ipynb)* to clean the data and be ready for EDA.
+2.  *Notebook 2: (02_eda.ipynb)* for EDA.
+3.  *Notebook 3: (03_Preprocessing_Feature_Engineering.ipynb)* to create final dataframe for modeling phase.
 
-**Option 2: Manual Loading**
-If you wish to use the data in your own separate script:
-```python
-import pandas as pd
-# Load the final merged dataset
-df = pd.read_csv('data/cleaned data/merged_data.tsv', sep='\t')
-```
 
-**Quick overview:**
-```python
-print(f"Total launches: {len(df)}")
-print(f"Date range: {df['Launch Date'].min()} to {df['Launch Date'].max()}")
-print(f"Attributes: {len(df.columns)}")
-```
+**Option 2: Module Usage**
+Alternatively you can reproduce our work using the following scripts:
+Folder: scripts
+- cleaning.py
+- preprocessing.py
+
 
 ### Dataset Contents
 
@@ -176,21 +127,6 @@ Quick statistics about the collected data:
 | Total Attributes | 39 |
 | File Size | 4.6 MB |
 
-### Reproducing Our Collection
-All collection and cleaning code is provided in this repository in the `Production Code` folder (see **Getting Started** for more detailed instructions):
-1. Run `01_Acquisition.ipynb` to collect data
-2. Run individual cleaning notebooks for each parameter set:
-    * `02a_Rocket_Extraction.ipynb` - Extracts rocket parameters
-    * `02b_Launch_Extraction.ipynb` - Extracts launch parameters
-    * `02c_Mission_Extraction.ipynb` - Extracts mission parameters
-4. Run `03_Merge.ipynb` to integrate
-
-**Note:** Full collection takes ~5-6 hours due to API rate limiting (15 requests/hour, with a maximum of 100 launches/request)
-
-### Data Quality
-- Historical launches (pre-2000s) have incomplete technical specifications
-- Missing values are documented in cleaning notebooks
-- Launch IDs preserved for verification against API
 
 ## Getting Started
 
@@ -224,54 +160,32 @@ drive.mount('/content/drive')
 4. All code is written to execute locally in-place without rearranging the directory structure. Crucially, each notebook is scripted to load and save data directly to the corresponding `Data/` folder within this repository (using relative paths), rather than a specific local absolute directory. If running in `Google Colab` or if a different directory structure is desired, update the code and file paths as needed.
 
 
-### Executing Program
-
-The project consists of three main phases:
-
-**Phase 1: Data Collection**
-* Open `01_Acquisition.ipynb` in `Production Code` folder
-* Set TEST_MODE flag to `False` for full collection (5-6 hours due to rate limiting) or `True` for a quick validation run (~8 mins).
-* Run notebook to collect raw launch data from API
-* **Note:** The script automatically handles directory creation and file compression. It is fully compatible with Google Colab.
-* Output: `raw_baseline_launches_Group7.json.zip` (Production) or `..._TEST.json.zip` (Test Mode).
-
-**Phase 2: Data Cleaning**
-* Open cleaning notebooks in `Production Code` folder:
-  * `02a_Rocket_Extraction.ipynb` - Extracts rocket parameters
-  * `02b_Launch_Extraction.ipynb` - Extracts launch parameters
-  * `02c_Mission_Extraction.ipynb` - Extracts mission parameters
-* Run each notebook to generate cleaned parameter files
-* **Note:** All cleaning notebooks feature **Hybrid Data Loading**. They will automatically download the raw data from GitHub if run in a cloud environment (Colab).
-
-**Phase 3: Data Merging**
-* In `Production Code` folder, run `03_Merge.ipynb` to combine all cleaned data
-* Output: `merged_data.tsv` saved to `data/cleaned data` folder - Final dataset ready for analysis
-
 ### **4. GitHub File Structure:**
 ```
 in-a-pickle/
-├── Production Code/
-│   ├── 01_Acquisition.ipynb
-│   ├── 02a_Rocket_Extraction.ipynb
-│   ├── 02b_Launch_Extraction.ipynb
-│   ├── 02c_Mission_Extraction.ipynb
-│   └── 03_Merge.ipynb
-├── Project materials/
-│   ├── Presentation.pdf
+├── data/
+│   ├── interim/
+│   │   ├── pre_clean_mdl_data.csv
+│   │   ├── shot.csv
+│   │   ├── shot_rally.csv
+│   │   └── shot_rally_cleaned.csv
+│   └── processed/
+│       ├── clean_mdl_data.csv
+│       └── clean_mdl_data_av.csv
+├── notebooks/
+│   ├── 01_data_wrangling.ipynb
+│   ├── 02_eda.ipynb
+│   ├── 03_Preprocessing_Feature_Engineering.ipynb
+│   ├── 04_av_trainig.ipynb
+│   └── 04_av_trainig_ref.ipynb
+├── scripts/
+│   ├── cleaning.py
 │   └── Project_Proposal.ipynb
 |   |__ Project Report.ipynb
-├── data/
-│   ├── cleaned data/
-│   │   ├── clean_rocket_data.tsv
-│   │   ├── clean_launch_data.tsv
-│   │   ├── clean_mission_data.tsv
-│   │   └── merged_data.tsv
-│   └── raw data/
-│       ├── raw_baseline_launches_Group7.json.zip
-│       └── raw_baseline_launches_Group7_TEST.json.zip
-├── testing notebooks/
-│   └── [various testing notebooks]
+├── test/
+│   └── project_module_test.ipynb
 ├── .gitignore
+├── LICENSE
 ├── data_dictionary.csv
 ├── README.md
 └── requirements.txt
@@ -318,16 +232,14 @@ DSCI 521 Sports Analytics Group
 
 ## Version History
 
-* 1.0 (November 2025)
+* 1.0 (March 2026)
     * Initial release - Complete data collection and preprocessing pipeline
     * 7,336 launches collected and cleaned
     * Three-way merge functionality implemented
 
 ## License
 
-This project is for educational purposes as part of DSCI 511 coursework at Drexel University.
-
-Data sourced from [The Space Devs Launch Library 2 API](https://thespacedevs.com/llapi).
+This project is for educational purposes on the Data analysis and interpretation pipeline for [Pklmart's Competitive Pickleball Extracts]((https://www.kaggle.com/datasets/cakesofspan/pklmarts-competitive-pickleball-extracts)) from Kaggle, for DSCI 521 group term project at Drexel University.
 
 
 ## Acknowledgments
