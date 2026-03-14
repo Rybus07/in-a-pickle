@@ -29,14 +29,14 @@ Our project uses the **Pklmart's Competitive Pickleball Extracts** hosted on Kag
 - **Attribution:** Dataset credits Launch Library 2 API as source
 
 
-
-
 ## 🛠 Methodology
 This project follows a standard Data Science Lifecycle:
 
-Data Acquisition: Leveraging the [Pklmart's Competitive Pickleball Extracts]((https://www.kaggle.com/datasets/cakesofspan/pklmarts-competitive-pickleball-extracts)) from Kaggle.
+### Data Acquisition
 
-### Data Cleaning and Feature Engineering :
+All data acquisition is performed in *Notebook 1: (01_data_wrangling.ipynb)* using the [Pklmart's Competitive Pickleball Extracts]((https://www.kaggle.com/datasets/cakesofspan/pklmarts-competitive-pickleball-extracts)) from Kaggle.
+
+### Data Cleaning and Feature Engineering
 
 Data Cleaning can be found in *Notebook 1: (01_data_wrangling.ipynb)*. The data was cleaned based on the following steps:
 1. Merging the Shot and Rally Data
@@ -80,7 +80,7 @@ Will be updated in the future....
 Will be updated in the future....
 
 
-## How to Use This Project
+## How to Recreate This Project
 
 **Option 1: Run the Notebooks (Recommended)**
 Our notebooks (`01`, `02`, `03`) follow the project methodology stated above and should be run in that order:
@@ -91,9 +91,9 @@ Our notebooks (`01`, `02`, `03`) follow the project methodology stated above and
 
 **Option 2: Module Usage**
 Alternatively you can reproduce our work using the following scripts:
-Folder: scripts
 - cleaning.py
 - preprocessing.py
+**An example of how the scripts can be used in a new notebook can be found the the following lcation `test/project_module_test.ipynb`**
 
 
 ## Dataset Contents
