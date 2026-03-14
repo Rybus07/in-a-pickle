@@ -226,9 +226,15 @@ Steps for cleaning and transforming shot data in main():
         a. Fill NaNs in ending_type, shot_outcome, and shot_type
     8. Change coordinate system
     
-    9. ADDITIONAL CHANGES FROM RYAN. LEAVING HERE FORE YOU TO FILL
+    9. Standardizing the court coordinate system
     
-    10. Saving to output directory
+    10. Calculating chage in position for both x and y coordinates
+
+    11. Adding Shot angle column to the dataframe
+
+    12. Calculating the distance a shot was played from the kitchen line
+    
+    13. Saving to output directory
 '''
 def main(args):
     # Step 1: Load shot and rally data
