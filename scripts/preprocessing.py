@@ -30,7 +30,7 @@ def reformat_data(df):
               'SP':'Speed Up', 'Res':'Reset', 'U':'U', 'L':'Lob', 'tsLob':'Lob',
               'E':'Volley', 'A':'Speed Up', 'O':'O', 'ball':'ball'}
 
-    df['shot_type'] = df['shot_type_y'].map(mapper)
+    df['shot_type'] = df['shot_type'].map(mapper)
 
     # Step 2. mapping skill level into 3 bins beginner, intermediate, advanced
     skill_mapper = {'2.5':'Beginner', '3.0':'Beginner', '3.5':'Intermediate',

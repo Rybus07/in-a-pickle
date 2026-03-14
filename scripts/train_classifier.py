@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import xgboost as xgb
 import argparse
-import preprocessing
+from scripts import preprocessing
 
 from sklearn.model_selection import GridSearchCV, StratifiedKFold
 
@@ -47,7 +47,7 @@ def main(args):
     # Save model in JSON format
     best_xgb.save_model(args.o_dir + '/' + args.model_file)
 
-    return
+    return x_test, y_test, X_unknown, labelencoder
 
 if __name__ == '__main__':
     # writing command-line interface

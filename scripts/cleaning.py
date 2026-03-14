@@ -200,6 +200,57 @@ def add_kitchen_distance(df):
 
     return df
 
+def add_skill_lvl(rally_df, game_df):
+    '''
+    This function uses game_df to merge on to rally_df so that skill levels can be included in the data
+    '''
+    # 1. Select only necessary columns from game_df
+    clean_game = game_df[['game_id', 'skill_lvl']]
+
+    # 2. Merge on game_id. 
+    # Use 'left' to ensure you don't lose any rallies if a game_id is missing.
+    df = pd.merge(rally_df, clean_game, on='game_id', how='left')
+
+    return df
+
+def add_shot_distance(df):
+    '''
+    This function adds the shot distance column to the dataframe
+    '''
+    df = df.copy()
+
+    # 1. Reuse or calculate the differences
+    dx = df['delta_x_loc']
+    dy = df['delta_y_loc']
+
+    # 2. Calculate Euclidean Distance
+    # np.hypot(dx, dy) is equivalent to sqrt(dx**2 + dy**2)
+    df['shot_distance'] = np.hypot(dx, dy)
+
+    return df
+
+def adding_srv_point_won_indicator(df):
+    '''
+    The function adds an indicator feature of wether or not the serving team won the point or not
+    '''
+
+    df = df.copy()
+    df['srv_point_won'] = (df['srv_team_id'] == df['w_team_id']).astype(int)
+    return df
+
+def add_team_hitting_column(df):
+    '''
+    This function is to create an indicator variable for which team is hitting at a given shot.
+    '''
+    # .copy() prevents 'SettingWithCopy' warnings if your df is a slice
+    df = df.copy()
+
+    # 1. Check if shot_nbr is odd:
+    # (df['shot_nbr'] % 2) returns 1 for odd, 0 for even
+    df['team_hitting'] = (df['shot_nbr'] % 2).astype(int)
+
+    return df
+
 '''
 Steps for cleaning and transforming shot data in main():
     1. Load shot and rally data
@@ -229,16 +280,25 @@ Steps for cleaning and transforming shot data in main():
 
     10. Standardizing the court coordinate system
     
-    11. Calculating chage in position for both x and y coordinates
-
-    12. Adding Shot angle column to the dataframe
+    11. Adding Shot Distance to the data
     
-    13. Saving to output directory
+    12. Calculating chage in position for both x and y coordinates
+
+    13. Adding Shot angle column to the dataframe
+
+    14. Adding skill_lvl to the data for future processing
+
+    15. Adding Server won point indicator to the dataframe
+
+    16. Adding Team hitting indicator to the dataframe
+    
+    17. Saving to output directory
 '''
 def main(args):
     # Step 1: Load shot and rally data
     shot_df = pd.read_csv(args.i_dir+args.shot_file)
     rally_df = pd.read_csv(args.i_dir+args.rally_file)
+    game_df = pd.read_csv(args.i_dir+args.game_file)
 
     # Step 2: Merge with rally data. Then sort and reset index
     # Note: order will be descending in shot_nbr
@@ -318,15 +378,27 @@ def main(args):
 
     # Step 10: Standardizing the court coordinate system
     shot_rally_df = standardize_court_loc(shot_rally_df)
+
+    # Step 11: Adding Shot Distance to the data
+    shot_rally_df = add_shot_distance(shot_rally_df)
     
-    # Step 11: Calculating chage in position for both x and y coordinates
+    # Step 12: Calculating chage in position for both x and y coordinates
     shot_rally_df = delta_x_loc(shot_rally_df)
     shot_rally_df = delta_y_loc(shot_rally_df)
 
-    # Step 12: Adding Shot angle column to the dataframe
+    # Step 13: Adding Shot angle column to the dataframe
     shot_rally_df = add_shot_angle(shot_rally_df)
+
+    # Step 14: Adding skill_lvl to the data for future processing
+    shot_rally_df = add_skill_lvl(shot_rally_df, game_df)
+
+    # Step 15: Adding Server won point indicator to the dataframe
+    shot_rally_df = adding_srv_point_won_indicator(shot_rally_df)
+
+    # Step 16: Adding Team hitting indicator to the dataframe
+    shot_rally_df = add_team_hitting_column(shot_rally_df)
     
-    # Step 13: Saving to output directory
+    # Step 17: Saving to output directory
     shot_rally_df.to_csv(args.o_dir+'/'+args.save_file, index=True)
     
     return
@@ -345,6 +417,8 @@ if __name__ == '__main__':
                         default='shot.csv')
     parser.add_argument('-r', '--rally_file', help='name of file holding rally data, should be csv',
                         default='rally.csv')
+    parser.add_argument('-g', '--game_file', help='name of file holding game data, should be csv',
+                        default='game.csv')
     parser.add_argument('-s', '--save_file', help='name of file to save cleaned data to',
                         default='shot_rally.csv')
     
