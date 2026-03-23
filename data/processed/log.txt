@@ -1,0 +1,6 @@
+3-22-2026:
+- added reclass_adv.csv
+- reclass_adv.csv is a view of clean_mdl_data.csv. Contains shots from only Advanced games and with reclassified shot types
+    - Advanced is defined as 4.5 and higher (inclusive)
+    - reclassified tzApp, U, ball, O, and nan as either Drop, Volley, Dink, Lob, Speed Up, Repel, Drive, or Reset
+        - reclassified with XGBoost, see notebook 03_Preprocessing_Feature_Engineering.ipynb
